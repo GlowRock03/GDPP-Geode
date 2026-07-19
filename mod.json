@@ -6,8 +6,8 @@
 		"mac": "2.2081",
 		"ios": "2.2081"
 	},
-	"id": "glowrock.gmd-pp-geode",
-	"name": "GMD-PP-Geode",
+	"id": "glowrock.gdpp-geode",
+	"name": "GDPP-Geode",
 	"version": "v1.0.0",
 	"developer": "GlowRock",
 	"description": "GDPP-Geode is a Geometry Dash analysis framework that captures runtime gameplay data, including player states, object interactions, triggers, and game events. It processes this information to generate detailed gameplay metrics for performance-based difficulty analysis.",

@@ -1,0 +1,1 @@
+GDPP-Geode is a Geometry Dash gameplay analysis mod that records and processes runtime game data. It captures player movement, object interactions, triggers, and gameplay events to generate structured difficulty metrics for the GDPP performance point system.
