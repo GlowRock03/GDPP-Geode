@@ -12,24 +12,17 @@ void MyPauseLayer::customSetup() {
 
     plainButtonSprite->updateLayout();
 
-    auto button = CCMenuItemSpriteExtra::create(plainButtonSprite, nullptr, this, menu_selector(MyPauseLayer::onRunMenu));
+    auto button = CCMenuItemSpriteExtra::create(plainButtonSprite, nullptr, this, menu_selector(MyPauseLayer::onOpenGDPPMenu));
 
     button->setID("gdpp-button"_spr);
     rightSideMenu->addChild(button);
     rightSideMenu->updateLayout();
 }
 
-void MyPauseLayer::onRunMenu(CCObject*) {
+void MyPauseLayer::onOpenGDPPMenu(CCObject*) {
 
-    Notification::create(
-        "GDPP Activated",
-        NotificationIcon::Success
-    )->show();
-
-    /*
-    auto runPopup = ::create();
+    auto runPopup = GDPPPopup::create();
     runPopup->setID("GDPP-popup"_spr);
     runPopup->setZOrder(999);
     this->addChild(runPopup);
-    */
 }
