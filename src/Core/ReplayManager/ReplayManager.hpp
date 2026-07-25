@@ -17,6 +17,8 @@ public:
     void startPlayback();
     void update(float dt);
 
+    std::vector<ReplayInput> getInputsForFrame(uint64_t frame);
+
 private:
 
     std::filesystem::path m_path;
@@ -25,4 +27,5 @@ private:
     bool m_loaded = false;
     bool m_playing = false;
     uint64_t m_currentFrame = 0;
+    size_t m_inputIndex = 0;
 };

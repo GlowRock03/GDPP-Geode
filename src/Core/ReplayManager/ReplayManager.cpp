@@ -40,6 +40,11 @@ void ReplayManager::startPlayback() {
     m_currentFrame = 0;
 
     log::info("Playback initialized");
+
+    for (int i = 0; i < 2000; i++) {
+        
+        update(1.f / 240.f);
+    }
 }
 
 void ReplayManager::update(float dt) {
@@ -47,13 +52,12 @@ void ReplayManager::update(float dt) {
     if (!m_playing)
         return;
 
-    /*
-        Later:
+    auto inputs = m_replay.getInputsForFrame(m_currentFrame);
 
-        - increment frame
-        - check inputs
-        - inject player controls
+    for (auto const& input : inputs) {
 
-    */
+        log::info("Frame {} -> Button {} {}", m_currentFrame, input.button, input.down ? "DOWN" : "UP");
+    }
+
     m_currentFrame++;
 }

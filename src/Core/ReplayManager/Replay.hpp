@@ -24,6 +24,8 @@ public:
 
     bool load(std::filesystem::path path);
     void printDebugInfo() const;
+    const std::vector<ReplayInput>& getInputs() const;
+    std::vector<ReplayInput> getInputsForFrame(uint64_t frame);
 
 private:
 
