@@ -21,4 +21,8 @@ endif()
 
 add_subdirectory($ENV{GEODE_SDK} ${CMAKE_CURRENT_BINARY_DIR}/geode)
 
+CPMAddPackage(NAME GDReplayFormat GITHUB_REPOSITORY maxnut/GDReplayFormat GIT_TAG 2a0ca3cff9b1d16863037a464da5fe27c28a5823)
+
+target_link_libraries(${PROJECT_NAME} libGDR)
+
 setup_geode_mod(${PROJECT_NAME})
