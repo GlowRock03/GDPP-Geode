@@ -12,19 +12,20 @@ bool ReplayManager::hasReplay() const {
 
 bool ReplayManager::loadReplay() {
 
-    if (!hasReplay()) {
-
-        log::error("No replay selected");
+    if (!hasReplay())
         return false;
-    }
 
-    m_loaded = m_replay.load(m_path);
 
-    if (m_loaded) {
+    if (!m_replay.load(m_path))
+        return false;
 
-        m_replay.printDebugInfo();
-    }
-    return m_loaded;
+
+    //m_replay.printDebugInfo();
+    m_replay.printDebugInfo();
+
+    m_loaded = true;
+
+    return true;
 }
 
 void ReplayManager::startPlayback() {
