@@ -82,49 +82,25 @@ void GDPPPopup::onSelectReplay(CCObject*) {
 
 void GDPPPopup::onReplaySelected(std::filesystem::path path) {
 
-    // Safety check
     auto extension = path.extension().string();
 
-    std::ranges::transform(
-        extension,
-        extension.begin(),
+    std::ranges::transform(extension, extension.begin(),
         [](unsigned char c) {
             return std::tolower(c);
         }
     );
 
-
     if (extension != ".gdr2") {
 
-        FLAlertLayer::create(
-            "Invalid File",
-            "Please select a .gdr2 replay file.",
-            "OK"
-        )->show();
-
+        FLAlertLayer::create("Invalid File", "Please select a .gdr2 replay file.", "OK" )->show();
         return;
     }
 
-
-    GDPPManager::get()
-        .getReplayManager()
-        .setReplayFile(path);
-
-
-    m_replayLabel->setString(
-        path.filename()
-            .string()
-            .c_str()
-    );
-
-
+    GDPPManager::get().getReplayManager().setReplayFile(path);
+    m_replayLabel->setString(path.filename().string().c_str());
     m_startButton->setEnabled(true);
 
-
-    geode::log::info(
-        "Selected replay: {}",
-        path.string()
-    );
+    geode::log::info("Selected replay: {}", path.string());
 }
 
 void GDPPPopup::onStart(CCObject*) {
@@ -137,5 +113,5 @@ void GDPPPopup::onStart(CCObject*) {
         return;
     }
 
-    GDPPManager::get().startRecording();
+    GDPPManager::get().startReplay();
 }

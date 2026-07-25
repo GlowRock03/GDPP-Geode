@@ -13,17 +13,26 @@ ReplayManager& GDPPManager::getReplayManager() {
     return m_replayManager;
 }
 
-void GDPPManager::startRecording() {
+void GDPPManager::startReplay() {
 
-    if (m_recording)
+    if (m_replayRunning)
         return;
 
-    m_recording = true;
+    auto& replayManager = getReplayManager();
 
-    log::info("GDPP recording started.");
+    if (!replayManager.loadReplay()) {
+
+        FLAlertLayer::create("Replay Error", "Failed to load replay file.", "OK")->show();
+        return;
+    }
+
+    replayManager.startPlayback();
+    m_replayRunning = true;
+
+    log::info("GDPP replay started");
 }
 
-bool GDPPManager::isRecording() const {
+bool GDPPManager::isReplayRunning() const {
     
     return m_recording;
 }

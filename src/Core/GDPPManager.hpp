@@ -11,13 +11,14 @@ public:
     static GDPPManager& get();
     ReplayManager& getReplayManager();
 
-    void startRecording();
-    bool isRecording() const;
+    void startReplay();
+    bool isReplayRunning() const;
 
 private:
 
     GDPPManager() = default;
 
     bool m_recording = false;
+    bool m_replayRunning = false;
     ReplayManager m_replayManager;
 };

@@ -4,18 +4,25 @@
 
 using namespace geode::prelude;
 
+#include "Replay.hpp"
+
 class ReplayManager {
 
 public:
 
-    static ReplayManager& get();
-
     void setReplayFile(std::filesystem::path path);
     bool hasReplay() const;
 
-    const std::filesystem::path& replayPath() const;
+    bool loadReplay();
+    void startPlayback();
+    void update(float dt);
 
 private:
 
     std::filesystem::path m_path;
+
+    Replay m_replay;
+    bool m_loaded = false;
+    bool m_playing = false;
+    uint64_t m_currentFrame = 0;
 };
