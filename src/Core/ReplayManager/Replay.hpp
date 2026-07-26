@@ -15,6 +15,7 @@ struct ReplayInput {
 
     uint64_t frame;
     uint8_t button;
+    bool player2;
     bool down;
 };
 

@@ -53,6 +53,6 @@ void ReplayManager::update(uint64_t frame) {
 
     for (auto const& input : inputs) {
 
-        log::info("Replay frame {} -> Button {} {}", frame, input.button, input.down ? "DOWN" : "UP");
+        log::info("Replay frame {} -> Button {} {} ; Player {}", frame, input.button, input.down ? "DOWN" : "UP", input.player2);
     }
 }

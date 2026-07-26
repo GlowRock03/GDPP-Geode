@@ -35,6 +35,7 @@ bool Replay::load(std::filesystem::path path) {
 
         converted.frame = input.frame;
         converted.button = input.button;
+        converted.player2 = input.player2;
         converted.down = input.down;
         m_inputs.push_back(converted);
     }
