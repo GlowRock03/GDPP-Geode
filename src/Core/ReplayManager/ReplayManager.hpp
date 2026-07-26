@@ -15,7 +15,7 @@ public:
 
     bool loadReplay();
     void startPlayback();
-    void update(float dt);
+    void update(uint64_t frame);
 
     std::vector<ReplayInput> getInputsForFrame(uint64_t frame);
 
@@ -27,5 +27,4 @@ private:
     bool m_loaded = false;
     bool m_playing = false;
     uint64_t m_currentFrame = 0;
-    size_t m_inputIndex = 0;
 };

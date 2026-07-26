@@ -26,6 +26,7 @@ public:
     void printDebugInfo() const;
     const std::vector<ReplayInput>& getInputs() const;
     std::vector<ReplayInput> getInputsForFrame(uint64_t frame);
+    void reset();
 
 private:
 
@@ -41,4 +42,5 @@ private:
     bool m_platformer = false;
     bool m_ldm = false;
     std::vector<ReplayInput> m_inputs;
+    size_t m_inputIndex = 0;
 };

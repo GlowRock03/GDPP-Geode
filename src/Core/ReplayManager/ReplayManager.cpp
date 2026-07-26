@@ -36,28 +36,23 @@ void ReplayManager::startPlayback() {
         return;
     }
 
+    m_replay.reset();
+
     m_playing = true;
     m_currentFrame = 0;
 
     log::info("Playback initialized");
-
-    for (int i = 0; i < 2000; i++) {
-        
-        update(1.f / 240.f);
-    }
 }
 
-void ReplayManager::update(float dt) {
+void ReplayManager::update(uint64_t frame) {
 
     if (!m_playing)
         return;
 
-    auto inputs = m_replay.getInputsForFrame(m_currentFrame);
+    auto inputs = m_replay.getInputsForFrame(frame);
 
     for (auto const& input : inputs) {
 
-        log::info("Frame {} -> Button {} {}", m_currentFrame, input.button, input.down ? "DOWN" : "UP");
+        log::info("Replay frame {} -> Button {} {}", frame, input.button, input.down ? "DOWN" : "UP");
     }
-
-    m_currentFrame++;
 }

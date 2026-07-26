@@ -69,13 +69,22 @@ std::vector<ReplayInput> Replay::getInputsForFrame(uint64_t frame) {
 
     std::vector<ReplayInput> result;
 
-    for (auto const& input : m_inputs) {
+    while (m_inputIndex < m_inputs.size() && m_inputs[m_inputIndex].frame <= frame) {
+
+        auto const& input = m_inputs[m_inputIndex];
 
         if (input.frame == frame) {
 
             result.push_back(input);
         }
+
+        m_inputIndex++;
     }
 
     return result;
+}
+
+void Replay::reset() {
+
+    m_inputIndex = 0;
 }
