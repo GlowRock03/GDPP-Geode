@@ -49,10 +49,16 @@ void ReplayManager::update(uint64_t frame) {
     if (!m_playing)
         return;
 
+    auto playLayer = PlayLayer::get();
+
+    if (!playLayer)
+        return;
+
     auto inputs = m_replay.getInputsForFrame(frame);
 
     for (auto const& input : inputs) {
 
         log::info("Replay frame {} -> Button {} {} ; Player {}", frame, input.button, input.down ? "DOWN" : "UP", input.player2);
+        playLayer->handleButton(input.down, input.button, !input.player2);
     }
 }

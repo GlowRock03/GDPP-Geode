@@ -34,5 +34,5 @@ void GDPPManager::startReplay() {
 
 bool GDPPManager::isReplayRunning() const {
     
-    return m_recording;
+    return m_replayRunning;
 }

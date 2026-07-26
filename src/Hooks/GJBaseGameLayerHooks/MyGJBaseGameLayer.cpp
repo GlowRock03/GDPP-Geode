@@ -9,7 +9,19 @@ void MyGJBaseGameLayer::processQueuedButtons(float dt, bool clearInputQueue) {
 
     uint64_t frame = m_gameState.m_currentProgress / 2;
 
-    //log::info("Frame={} (Real) Frame={} Time={}", m_gameState.m_currentProgress, frame, m_gameState.m_levelTime);
-
     GDPPManager::get().getReplayManager().update(frame);
+}
+
+void MyGJBaseGameLayer::handleButton(bool down, int button, bool isPlayer1) {
+    
+    if (GDPPManager::get().isReplayRunning()) {
+
+        #ifdef GEODE_IS_MOBILE
+            m_allowedButtons.clear();
+        #endif
+
+        log::info("GDPP Input -> Button {} Player {} {}", button, isPlayer1 ? 2 : 1, down ? "DOWN" : "UP");
+    }
+
+    GJBaseGameLayer::handleButton(down, button, isPlayer1);
 }

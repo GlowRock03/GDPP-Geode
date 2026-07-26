@@ -12,4 +12,5 @@ class $modify(MyGJBaseGameLayer, GJBaseGameLayer) {
 public:
 
     void processQueuedButtons(float dt, bool clearInputQueue);
+    void handleButton(bool down, int button, bool isPlayer1);
 };
