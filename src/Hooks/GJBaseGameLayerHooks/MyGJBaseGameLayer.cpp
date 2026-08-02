@@ -14,7 +14,10 @@ void MyGJBaseGameLayer::processQueuedButtons(float dt, bool clearInputQueue) {
 
 void MyGJBaseGameLayer::handleButton(bool down, int button, bool isPlayer1) {
     
-    if (GDPPManager::get().isReplayRunning()) {
+    if (GDPPManager::get().getReplayManager().isReplayRunning()) {
+
+        if (!GDPPManager::get().getReplayManager().isInjectingInput()) 
+            return;
 
         #ifdef GEODE_IS_MOBILE
             m_allowedButtons.clear();

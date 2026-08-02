@@ -113,5 +113,10 @@ void GDPPPopup::onStart(CCObject*) {
         return;
     }
 
-    GDPPManager::get().startReplay();
+    GDPPManager::get().getReplayManager().queueReplay();
+
+    //close and start level
+      //close popup
+      //close pause layer
+      //restart play layer
 }
