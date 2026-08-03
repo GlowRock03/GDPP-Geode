@@ -134,6 +134,11 @@ void ReplayManager::startReplay() {
         return;
     }
 
+    m_replay.reset();
+    m_player1State.held = false;
+    m_player2State.held = false;
+    m_restoreHeldButtons = false;
+
     m_replayState = ReplayManager::ReplayState::REPLAYING;
 
     Notification::create("Replay Started", NotificationIcon::Success)->show();
@@ -143,6 +148,14 @@ void ReplayManager::stopReplay() {
 
     if (m_replayState != ReplayManager::ReplayState::REPLAYING)
         return;
+
+    m_replay.reset();
+
+    m_player1State.held = false;
+    m_player2State.held = false;
+
+    m_restoreHeldButtons = false;
+    m_injectingInput = false;
 
     m_replayState = ReplayManager::ReplayState::STOPPED;
 
