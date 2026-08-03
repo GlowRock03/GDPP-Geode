@@ -12,3 +12,8 @@ ReplayManager& GDPPManager::getReplayManager() {
 
     return m_replayManager;
 }
+
+LevelManager& GDPPManager::getLevelManager() {
+
+    return m_levelManager;
+}
