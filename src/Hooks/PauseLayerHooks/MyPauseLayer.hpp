@@ -15,4 +15,6 @@ public:
     void onOpenGDPPMenu(CCObject*);
     
     void onResume(CCObject*);
+    void goEdit();
+    void onQuit(CCObject*);
 };

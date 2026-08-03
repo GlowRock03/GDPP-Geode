@@ -33,3 +33,17 @@ void MyPauseLayer::onResume(CCObject* sender) {
 
     GDPPManager::get().getReplayManager().setHeldButtonRestore(true);
 }
+
+void MyPauseLayer::goEdit() {
+
+    PauseLayer::goEdit();
+
+    GDPPManager::get().getReplayManager().stopReplay();
+}
+
+void MyPauseLayer::onQuit(CCObject* sender) {
+
+    PauseLayer::onQuit(sender);
+
+    GDPPManager::get().getReplayManager().stopReplay();
+}
