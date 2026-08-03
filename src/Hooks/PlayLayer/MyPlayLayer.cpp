@@ -7,6 +7,7 @@ void MyPlayLayer::resetLevel() {
 
     if (GDPPManager::get().getReplayManager().isReplayQueued()) {
 
+        log::info("starting replay from reset level");
         GDPPManager::get().getReplayManager().startReplay();
     }
 }
@@ -24,6 +25,5 @@ void MyPlayLayer::addObject(GameObject* object) {
         GDPPManager::get().getLevelManager().registerObject(object);
     }
     
-
     PlayLayer::addObject(object);
 }

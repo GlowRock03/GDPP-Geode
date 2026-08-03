@@ -9,11 +9,11 @@
 
 using namespace geode::prelude;
 
-class GDPPPopup : public Popup {
+class StopReplayPopup : public Popup {
 
 public: 
 
-    static GDPPPopup* create();
+    static StopReplayPopup* create();
 
 protected:
 

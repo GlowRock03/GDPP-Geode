@@ -1,8 +1,8 @@
-#include "GDPPPopup.hpp"
+#include "ReplayPopup.hpp"
 
-GDPPPopup* GDPPPopup::create() {
+ReplayPopup* ReplayPopup::create() {
 
-    auto popup = new GDPPPopup;
+    auto popup = new ReplayPopup;
 
     if (popup->init(0)) {
 
@@ -14,7 +14,7 @@ GDPPPopup* GDPPPopup::create() {
     return nullptr;
 }
 
-bool GDPPPopup::init(int value) {
+bool ReplayPopup::init(int value) {
 
     if (!Popup::init(300.f, 240.f, "GJ_square04.png")) return false;
 
@@ -32,15 +32,15 @@ bool GDPPPopup::init(int value) {
     mainContainer->addChild(m_replayLabel);
 
     auto selectSprite = ButtonSprite::create("Select Replay");
-    auto selectButton = CCMenuItemSpriteExtra::create(selectSprite, this, menu_selector(GDPPPopup::onSelectReplay));
+    auto selectButton = CCMenuItemSpriteExtra::create(selectSprite, this, menu_selector(ReplayPopup::onSelectReplay));
     selectButton->setPosition({150, 120});
 
     auto startSprite = ButtonSprite::create("Start");
-    m_startButton = CCMenuItemSpriteExtra::create(startSprite, this, menu_selector(GDPPPopup::onStart));
+    m_startButton = CCMenuItemSpriteExtra::create(startSprite, this, menu_selector(ReplayPopup::onStart));
     m_startButton->setPosition({150, 70});
 
     auto stopSprite = ButtonSprite::create("Stop");
-    m_stopButton = CCMenuItemSpriteExtra::create(stopSprite, this, menu_selector(GDPPPopup::onStop));
+    m_stopButton = CCMenuItemSpriteExtra::create(stopSprite, this, menu_selector(ReplayPopup::onStop));
     m_stopButton->setPosition({150, 20});
 
     m_buttonMenu->addChild(selectButton);
@@ -52,7 +52,7 @@ bool GDPPPopup::init(int value) {
     return true;
 }
 
-void GDPPPopup::onSelectReplay(CCObject*) {
+void ReplayPopup::onSelectReplay(CCObject*) {
 
     file::FilePickOptions::Filter filter = {
         .description = "Geometry Dash Replay",
@@ -84,7 +84,7 @@ void GDPPPopup::onSelectReplay(CCObject*) {
     );
 }
 
-void GDPPPopup::onReplaySelected(std::filesystem::path path) {
+void ReplayPopup::onReplaySelected(std::filesystem::path path) {
 
     auto extension = path.extension().string();
 
@@ -107,7 +107,7 @@ void GDPPPopup::onReplaySelected(std::filesystem::path path) {
     geode::log::info("Selected replay: {}", path.string());
 }
 
-void GDPPPopup::onStart(CCObject*) {
+void ReplayPopup::onStart(CCObject*) {
 
     if (!GDPPManager::get().getReplayManager().hasReplay()) {
 
@@ -117,24 +117,37 @@ void GDPPPopup::onStart(CCObject*) {
 
     GDPPManager::get().getReplayManager().queueReplay();
 
-    
+    auto parent = this->getParent();
 
-    auto pauseLayer = typeinfo_cast<PauseLayer*>(this->getParent());
+    if (!parent) {
 
-    if (pauseLayer) {
-
-        this->removeFromParentAndCleanup(true);
-        pauseLayer->onRestart(nullptr);
+        log::error("Unknown parent layer for ReplayPopup");
+        GDPPManager::get().getReplayManager().stopReplay();
+        return;
     }
 
-    
-    //close and start level
-      //close popup
-      //close pause layer
-      //restart play layer
+    this->removeFromParent();
+
+    if (auto levelSelectLayer = typeinfo_cast<LevelSelectLayer*>(parent)) {
+
+        levelSelectLayer->onPlay(this);
+    }
+    else if (auto levelInfoLayer = typeinfo_cast<LevelInfoLayer*>(parent)) {
+
+        levelInfoLayer->onPlay(this);
+    }
+    else if (auto secretLevel = typeinfo_cast<SecretLayer2*>(parent)) {
+
+        secretLevel->onSecretLevel(this);
+    }
+    else {
+
+        log::error("Unknown parent layer for ReplayPopup");
+        GDPPManager::get().getReplayManager().stopReplay();
+    }
 }
 
-void GDPPPopup::onStop(CCObject*) {
+void ReplayPopup::onStop(CCObject*) {
 
     auto& replay = GDPPManager::get().getReplayManager();
 

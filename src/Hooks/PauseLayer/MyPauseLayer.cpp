@@ -12,16 +12,16 @@ void MyPauseLayer::customSetup() {
 
     plainButtonSprite->updateLayout();
 
-    auto button = CCMenuItemSpriteExtra::create(plainButtonSprite, nullptr, this, menu_selector(MyPauseLayer::onOpenGDPPMenu));
+    auto button = CCMenuItemSpriteExtra::create(plainButtonSprite, nullptr, this, menu_selector(MyPauseLayer::onOpenStopReplayMenu));
 
-    button->setID("gdpp-button"_spr);
+    button->setID("stop-replay-button"_spr);
     rightSideMenu->addChild(button);
     rightSideMenu->updateLayout();
 }
 
-void MyPauseLayer::onOpenGDPPMenu(CCObject*) {
+void MyPauseLayer::onOpenStopReplayMenu(CCObject*) {
 
-    auto runPopup = GDPPPopup::create();
+    auto runPopup = StopReplayPopup::create();
     runPopup->setID("GDPP-popup"_spr);
     runPopup->setZOrder(999);
     this->addChild(runPopup);
