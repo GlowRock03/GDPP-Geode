@@ -12,4 +12,6 @@ public:
 
     void resetLevel();
     void levelComplete();
+
+    void addObject(GameObject* object);
 };

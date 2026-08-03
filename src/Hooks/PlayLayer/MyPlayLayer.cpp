@@ -17,3 +17,13 @@ void MyPlayLayer::levelComplete() {
 
     GDPPManager::get().getReplayManager().stopReplay();
 }
+
+void MyPlayLayer::addObject(GameObject* object) {
+
+    if (GDPPManager::get().getReplayManager().isReplayQueued()) {
+        GDPPManager::get().getLevelManager().registerObject(object);
+    }
+    
+
+    PlayLayer::addObject(object);
+}
