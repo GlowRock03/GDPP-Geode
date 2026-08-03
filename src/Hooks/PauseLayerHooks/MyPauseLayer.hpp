@@ -4,6 +4,7 @@
 #include <Geode/modify/PauseLayer.hpp>
 
 #include "../../Popups/GDPPPopup/GDPPPopup.hpp"
+#include "../../Core/GDPPManager.hpp"
 
 using namespace geode::prelude;
 
@@ -12,4 +13,6 @@ public:
 
     void customSetup();
     void onOpenGDPPMenu(CCObject*);
+    
+    void onResume(CCObject*);
 };

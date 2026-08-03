@@ -38,7 +38,6 @@ void ReplayManager::startPlayback() {
     m_replay.reset();
 
     startReplay();
-    m_currentFrame = 0;
 
     log::info("Playback initialized");
     Notification::create("Replay Started", NotificationIcon::Success)->show();
@@ -65,11 +64,54 @@ void ReplayManager::update(uint64_t frame) {
     for (auto const& input : inputs) {
 
         log::info("Replay frame {} -> Button {} {} ; Player {}", frame, input.button, input.down ? "DOWN" : "UP", input.player2);
+
+        if (input.player2) {
+            m_player2State.held = input.down;
+            m_player2State.button = input.button;
+        }
+        else {
+            m_player1State.held = input.down;
+            m_player1State.button = input.button;
+        }
         
         m_injectingInput = true;
         playLayer->handleButton(input.down, input.button, !input.player2);
         m_injectingInput = false;
     }
+}
+
+bool ReplayManager::getHeldButtonRestore() {
+
+    return m_restoreHeldButtons;
+}
+
+void ReplayManager::setHeldButtonRestore(bool set) {
+
+    m_restoreHeldButtons = set;
+}
+
+void ReplayManager::restoreHeldButtons(uint64_t frame) {
+
+    auto playLayer = PlayLayer::get();
+
+    if (!playLayer)
+        return;
+
+    if (m_player1State.held) {
+
+        m_injectingInput = true;
+        playLayer->queueButton(m_player1State.button, true, true, frame);
+        m_injectingInput = false;
+    }
+
+    if (m_player2State.held) {
+
+        m_injectingInput = true;
+        playLayer->queueButton(m_player2State.button, true, true, frame);
+        m_injectingInput = false;
+    }
+
+    m_restoreHeldButtons = false;
 }
 
 

@@ -26,3 +26,10 @@ void MyPauseLayer::onOpenGDPPMenu(CCObject*) {
     runPopup->setZOrder(999);
     this->addChild(runPopup);
 }
+
+void MyPauseLayer::onResume(CCObject* sender) {
+
+    PauseLayer::onResume(sender);
+
+    GDPPManager::get().getReplayManager().setHeldButtonRestore(true);
+}

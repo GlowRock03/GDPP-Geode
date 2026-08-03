@@ -24,6 +24,10 @@ public:
     bool isInjectingInput() const;
     void update(uint64_t frame);
 
+    bool getHeldButtonRestore();
+    void setHeldButtonRestore(bool set);
+    void restoreHeldButtons(uint64_t frame);
+
     void queueReplay();
     void startReplay();
     void stopReplay();
@@ -38,8 +42,15 @@ private:
     Replay m_replay;
     bool m_loaded = false;
 
+    struct HeldState {
+        bool held = false;
+        uint8_t button = 1;
+    };
+    HeldState m_player1State;
+    HeldState m_player2State;
+
     bool m_injectingInput = false;
-    uint64_t m_currentFrame = 0;
+    bool m_restoreHeldButtons = false;
 
     enum ReplayState m_replayState = STOPPED;
 };
