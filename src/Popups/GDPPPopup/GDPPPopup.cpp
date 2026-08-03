@@ -38,10 +38,14 @@ bool GDPPPopup::init(int value) {
     auto startSprite = ButtonSprite::create("Start");
     m_startButton = CCMenuItemSpriteExtra::create(startSprite, this, menu_selector(GDPPPopup::onStart));
     m_startButton->setPosition({150, 70});
-    m_startButton->setEnabled(false);
+
+    auto stopSprite = ButtonSprite::create("Stop");
+    m_stopButton = CCMenuItemSpriteExtra::create(stopSprite, this, menu_selector(GDPPPopup::onStop));
+    m_stopButton->setPosition({150, 20});
 
     m_buttonMenu->addChild(selectButton);
     m_buttonMenu->addChild(m_startButton);
+    m_buttonMenu->addChild(m_stopButton);
 
     mainContainer->updateLayout();
 
@@ -105,9 +109,7 @@ void GDPPPopup::onReplaySelected(std::filesystem::path path) {
 
 void GDPPPopup::onStart(CCObject*) {
 
-    auto& replay = GDPPManager::get().getReplayManager();
-
-    if (!replay.hasReplay()) {
+    if (!GDPPManager::get().getReplayManager().hasReplay()) {
 
         FLAlertLayer::create("Error", "No replay selected", "OK")->show();
         return;
@@ -115,8 +117,35 @@ void GDPPPopup::onStart(CCObject*) {
 
     GDPPManager::get().getReplayManager().queueReplay();
 
+    
+
+    auto pauseLayer = typeinfo_cast<PauseLayer*>(this->getParent());
+
+    if (pauseLayer) {
+
+        this->removeFromParentAndCleanup(true);
+        pauseLayer->onRestart(nullptr);
+    }
+
+    
     //close and start level
       //close popup
       //close pause layer
       //restart play layer
+}
+
+void GDPPPopup::onStop(CCObject*) {
+
+    auto& replay = GDPPManager::get().getReplayManager();
+
+    if (GDPPManager::get().getReplayManager().isReplayRunning() || GDPPManager::get().getReplayManager().isReplayQueued()) {
+
+        GDPPManager::get().getReplayManager().stopReplay();
+        
+    } else {
+
+        Notification::create("No Replay To Stop", NotificationIcon::Success)->show();
+    }
+
+    return;
 }

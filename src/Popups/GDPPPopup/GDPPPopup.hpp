@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Geode/Geode.hpp>
+#include <Geode/binding/PauseLayer.hpp>
 #include <Geode/utils/file.hpp>
 #include <Geode/utils/async.hpp>
 
@@ -20,8 +21,10 @@ protected:
 
     CCLabelBMFont* m_replayLabel = nullptr;
     CCMenuItemSpriteExtra* m_startButton = nullptr;
+    CCMenuItemSpriteExtra* m_stopButton = nullptr;
 
     void onSelectReplay(CCObject*);
     void onReplaySelected(std::filesystem::path path);
     void onStart(CCObject*);
+    void onStop(CCObject*);
 };
