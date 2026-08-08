@@ -149,6 +149,7 @@ void ReplayManager::stopReplay() {
     if (m_replayState != ReplayManager::ReplayState::REPLAYING)
         return;
 
+    m_path.clear();
     m_replay.reset();
 
     m_player1State.held = false;
@@ -156,6 +157,8 @@ void ReplayManager::stopReplay() {
 
     m_restoreHeldButtons = false;
     m_injectingInput = false;
+
+    
 
     m_replayState = ReplayManager::ReplayState::STOPPED;
 
